@@ -306,3 +306,25 @@ export const addReview = async (req, res, next) => {
     return res.status(500).send("Internal Server Error");
   }
 };
+
+
+// give me a controller to get all the gigs
+export const getAllGigs = async (req, res, next) => {
+  try {
+    const prisma = new PrismaClient();
+    const gigs = await prisma.gigs.findMany({
+      include: {
+        reviews: {
+          include: {
+            reviewer: true,
+          },
+        },
+        createdBy: true,
+      },
+    });
+    return res.status(200).json({ gigs });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send("Internal Server Error");
+  }
+};

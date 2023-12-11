@@ -7,10 +7,12 @@ import {
   getUserAuthGigs,
   searchGigs,
   addReview,
-  deleteGig
+  deleteGig,
+  getAllGigs
 } from "../controllers/GigsControllers.js";
 import multer from "multer";
 import { verifyToken } from "../middlewares/AuthMiddleware.js";
+import { isAdmin } from "../middlewares/AdminMiddleware.js";
 
 const upload = multer({ dest: "uploads/" });
 
@@ -25,5 +27,7 @@ gigRoutes.get("/search-gigs", searchGigs);
 gigRoutes.post("/add-review", verifyToken, addReview);
 gigRoutes.get("/check-gig-order/:gigId", verifyToken, checkGigOrder);
 gigRoutes.post("/add-review/:gigId", verifyToken, addReview);
+
+gigRoutes.get("/get-all-gigs", verifyToken,isAdmin, getAllGigs);
 
 export default gigRoutes;
