@@ -1,15 +1,12 @@
-/*Make a controller for user management */ 
-Path: controllers/UserController.js
- import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
- export const getAllUsers = async (req, res, next) => {
+export const getAllUsers = async (req, res, next) => {
    try {
 const prisma = new PrismaClient();
      const users = await prisma.user.findMany({
        select: {
          id: true,
          email: true,
-
          username: true,
          fullName: true,
          description: true,
